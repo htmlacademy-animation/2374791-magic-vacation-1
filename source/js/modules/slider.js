@@ -42,10 +42,6 @@ export default () => {
           el: `.swiper-pagination`,
           type: `fraction`
         },
-        navigation: {
-          nextEl: `.js-control-next`,
-          prevEl: `.js-control-prev`,
-        },
         keyboard: {
           enabled: true
         },
@@ -60,16 +56,57 @@ export default () => {
             } else if (storySlider.activeIndex === 6) {
               sliderContainer.style.backgroundImage = `url("img/slide4.jpg")`;
             }
+
+
+            if (storySlider.activeIndex === 0) {
+              document.querySelector(`.js-control-prev`).classList.add(`swiper-button-disabled`);
+            } else if (storySlider.activeIndex === 6) {
+              document.querySelector(`.js-control-next`).classList.add(`swiper-button-disabled`);
+            } else {
+              document.querySelectorAll(`.js-control`).forEach((control) => control.classList.remove(`swiper-button-disabled`));
+            }
+
           },
           resize: () => {
-            storySlider.update();
-          }
+            // storySlider.update();
+          },
+          slideChangeTransitionStart: () => {
+            storySlider.$el[0].classList.add(`is-fade`);
+          },
+          slideChangeTransitionEnd: () => {
+            storySlider.$el[0].classList.remove(`is-fade`);
+          },
         },
         observer: true,
-        observeParents: true
+        observeParents: true,
+        allowTouchMove: false
       });
     }
   };
+
+  document.querySelectorAll(`.js-control`).forEach((button) => {
+    button.addEventListener(`click`, () => {
+
+      storySlider.$el[0].classList.add(`is-start`);
+      storySlider.$el[0].classList.remove(`is-end`);
+
+      setTimeout(() => {
+        if (button.classList.contains(`js-control-prev`)) {
+          storySlider.slidePrev();
+        }
+
+        if (button.classList.contains(`js-control-next`)) {
+          storySlider.slideNext();
+        }
+
+        storySlider.$el[0].classList.remove(`is-start`);
+        storySlider.$el[0].classList.add(`is-end`);
+      }, 600);
+
+
+    });
+  });
+
 
   window.addEventListener(`resize`, function () {
     if (storySlider) {

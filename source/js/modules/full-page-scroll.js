@@ -67,6 +67,13 @@ export default class FullPageScroll {
     if (activeItem) {
       this.menuElements.forEach((item) => item.classList.remove(`active`));
       activeItem.classList.add(`active`);
+
+      if (activeItem.dataset.href === `story`) {
+        document.querySelector(`.js-slider`).classList.remove(`is-end`);
+        setTimeout(() => {
+          document.querySelector(`.js-slider`).classList.add(`is-end`);
+        }, 50);
+      }
     }
   }
 
