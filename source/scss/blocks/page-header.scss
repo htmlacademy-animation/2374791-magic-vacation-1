@@ -348,11 +348,16 @@ body.is-loaded {
     }
   }
 
-  .screen__footer {
-    @media (min-width: $mobile) {
-      transform: translateY(0);
+
+  .screen.active {
+
+    .screen__footer {
+      @media (min-width: $mobile) {
+        transform: translateY(0);
+      }
     }
   }
+
 
   .page-header__menu a.active:after {
     opacity: 1;

@@ -40,26 +40,34 @@ export default class FullPageScroll {
   }
 
   onUrlHashChanged() {
+    const prevIndex = this.activeScreen;
     const newIndex = Array.from(this.screenElements).findIndex((screen) => location.hash.slice(1) === screen.id);
     this.activeScreen = (newIndex < 0) ? 0 : newIndex;
-    this.changePageDisplay();
+    this.changePageDisplay(prevIndex);
   }
 
-  changePageDisplay() {
-    this.changeVisibilityDisplay();
+  changePageDisplay(prevIndex) {
+    this.changeVisibilityDisplay(prevIndex);
     this.changeActiveMenuItem();
     this.emitChangeDisplayEvent();
   }
 
-  changeVisibilityDisplay() {
+  changeVisibilityDisplay(prevIndex) {
     this.screenElements.forEach((screen) => {
       screen.classList.add(`screen--hidden`);
       screen.classList.remove(`active`);
+      screen.classList.remove(`screen--prev`);
     });
+    this.screenElements[prevIndex].classList.add(`screen--prev`);
     this.screenElements[this.activeScreen].classList.remove(`screen--hidden`);
     setTimeout(() => {
+      if (this.activeScreen === 0) {
+        document.querySelector(`.animation-screen`).classList.remove(`hidden`);
+      } else {
+        document.querySelector(`.animation-screen`).classList.add(`hidden`);
+      }
       this.screenElements[this.activeScreen].classList.add(`active`);
-    }, 100);
+    }, 10);
   }
 
   changeActiveMenuItem() {
