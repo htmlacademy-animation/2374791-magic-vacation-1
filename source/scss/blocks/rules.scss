@@ -144,9 +144,9 @@
     font-size: 1.2rem;
   }
 
+
   &::before {
-    content: counter(li);
-    counter-increment: li;
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
@@ -177,8 +177,40 @@
     }
   }
 
+  &::after {
+    content: counter(li);
+    counter-increment: li;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    width: 4.5rem;
+    height: 4.5rem;
+    opacity: 0;
+
+    @media (max-width: $tablet) and (orientation: portrait) {
+      top: 1rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      line-height: 3rem;
+      font-size: 1.4rem;
+    }
+
+    @media (max-width: $mobile) and (orientation: landscape) {
+      top: 0.6rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      line-height: 3rem;
+      font-size: 1.4rem;
+    }
+  }
+
   p {
     margin: 0;
+    opacity: 0;
 
     @media (max-width: $tablet) and (orientation: portrait) {
       min-height: calc(1.4rem * 2.2);
@@ -210,4 +242,142 @@
     bottom: 2rem;
     right: 1.5rem;
   }
+
+  &:before {
+    right: 0;
+    left: auto;
+    width: 80px;
+    transform: translateY(-50%);
+    opacity: 0;
+  }
+
+  &-text {
+    opacity: 0;
+    pointer-events: auto;
+  }
 }
+
+.screen--rules.active {
+  .rules__link {
+
+    &:before {
+      animation: button-loading 0.3s ease-out 0.9s forwards, opacity-to 0.15s ease-out 0.85s forwards;
+    }
+
+    &-text {
+      animation: opacity-to 0.5s ease-out 0.95s forwards;
+    }
+  }
+
+  .rules__item {
+
+    &::before {
+      animation-name: scale-to;
+      animation-duration: 0.4s ;
+      animation-timing-function: ease-out;
+      animation-fill-mode: both;
+    }
+
+    &::after {
+      animation-name: opacity-to;
+      animation-duration: 0.25s;
+      animation-timing-function: ease-out;
+      animation-fill-mode: both;
+    }
+
+    p {
+      animation-name: translate-x-to;
+      animation-duration: 0.3s ;
+      animation-timing-function: ease-out;
+      animation-fill-mode: both;
+    }
+
+    &:nth-child(2) {
+
+      &::before {
+        animation-delay: 0.2s;
+      }
+
+      &::after {
+        animation-delay: 0.35s;
+      }
+
+      p {
+        animation-delay: 0.3s;
+      }
+    }
+
+    &:nth-child(3) {
+
+      &::before {
+        animation-delay: 0.4s;
+      }
+
+      &::after {
+        animation-delay: 0.7s;
+      }
+
+      p {
+        animation-delay: 0.6s;
+      }
+    }
+
+    &:nth-child(4) {
+
+      &::before {
+        animation-delay: 0.6s;
+      }
+
+      &::after {
+        animation-delay: 1.05s;
+      }
+
+      p {
+        animation-delay: 0.9s;
+      }
+    }
+
+  }
+}
+
+
+@keyframes button-loading {
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes opacity-to {
+  to {
+    opacity: 1;
+  }
+}
+
+
+@keyframes scale-to {
+  from {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+
+@keyframes translate-x-to {
+  from {
+    transform: translateX(40px);
+    opacity: 0;
+  }
+  90% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
