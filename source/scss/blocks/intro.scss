@@ -1,9 +1,8 @@
 .screen--intro.active {
-  .intro__message {
-    p {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  .intro__label,
+  .intro__message p {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -157,6 +156,8 @@
   text-transform: uppercase;
   font-size: 2.4rem;
   line-height: 1.2;
+  transition: opacity 0.5s ease-out 1s ;
+  opacity: 0;
 
   @media (min-width: $stop-scaling) {
     margin: 0 0 16px;

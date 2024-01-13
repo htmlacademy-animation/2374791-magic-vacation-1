@@ -23,3 +23,55 @@
     }
   }
 }
+
+
+
+.animated-text {
+  &__word {
+    display: inline-flex;
+    overflow: hidden;
+  }
+
+  &__letter {
+    position: relative;
+    display: inline-block;
+    transform: translate3d(0,150%,0);
+  }
+
+  &.is-active &__letter {
+    transform: translate3d(0,0,0);
+  }
+
+  &.intro__title {
+    width: 100%;
+    max-width: unset;
+  }
+
+  &.intro__title,
+  &.intro__date,
+  &.game__title,
+  &.rules__title,
+  &.prizes__title,
+  &.slider__item-title {
+    line-height: 1.3;
+  }
+
+  &.intro__date {
+    line-height: 1.5;
+
+    .animated-text__letter {
+      padding-right: 2px;
+    }
+  }
+
+}
+
+.screen.active {
+
+  .animated-text:not(.animated-text--has-delay) {
+    .animated-text__letter {
+      transform: translate3d(0,0,0);
+    }
+  }
+
+}

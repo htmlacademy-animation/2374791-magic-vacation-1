@@ -8,6 +8,7 @@ import result from './modules/result.js';
 import form from './modules/form.js';
 import social from './modules/social.js';
 import FullPageScroll from './modules/full-page-scroll';
+import textAnimated from "./modules/text-animation";
 
 // init modules
 mobileHeight();
@@ -24,4 +25,35 @@ fullPageScroll.init();
 
 window.addEventListener(`load`, function () {
   document.querySelector(`body`).classList.add(`is-loaded`);
+
+  const titleAnimate = textAnimated({
+    selector: `.intro__title`,
+  });
+
+  const sliderTtitleAnimated = textAnimated({
+    selector: `.slider__item-title`
+  });
+
+  const prizesTitleAnimated = textAnimated({
+    selector: `.prizes__title`
+  });
+
+  const rulesTitleAnimated = textAnimated({
+    selector: `.rules__title`
+  });
+
+  const gameTitleAnimated = textAnimated({
+    selector: `.game__title`
+  });
+
+  const introTitleAnimated = textAnimated({
+    selector: `.intro__date`,
+    delay: true
+  });
+
+
+  setTimeout(() => {
+    introTitleAnimated.start();
+  }, 1000);
+
 });
