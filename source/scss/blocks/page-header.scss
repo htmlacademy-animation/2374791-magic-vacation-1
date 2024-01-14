@@ -290,12 +290,12 @@
 
     &:hover,
     &:focus {
-      color: $c-purple;
+      color: var(--primary-color);
       outline: none;
 
       &::after {
         opacity: 1;
-        background-color: $c-purple;
+        background-color: var(--primary-color);
         left: 0;
         right: auto;
         width: 100%;

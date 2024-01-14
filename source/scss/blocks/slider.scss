@@ -213,7 +213,7 @@
   position: relative;
   width: 4rem;
   height: 4rem;
-  color: $c-dark;
+  color: var(--primary-color);
 
   @media (min-width: $stop-scaling) {
     width: 40px;
@@ -229,6 +229,7 @@
     border: 2px solid $c-light;
     border-radius: 50%;
     z-index: -1;
+    transition: width $default-transition, height $default-transition;
   }
 
   svg {
@@ -245,7 +246,7 @@
   }
 
   &:hover {
-    color: $c-purple;
+    color: var(--primary-color);
 
     &::before {
       width: 112.5%;
@@ -254,11 +255,11 @@
   }
 
   &:focus {
-    color: $c-purple;
+    color: var(--primary-color);
     outline: none;
 
     &::before {
-      border-color: $c-purple;
+      border-color: var(--primary-color);
     }
   }
 
@@ -269,13 +270,13 @@
     &::before {
       width: 100%;
       height: 100%;
-      background-color: $c-purple;
-      border-color: $c-purple;
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
     }
   }
 
   &.swiper-button-disabled {
-    opacity: 0.5;
+    opacity: 0.5 !important;
     pointer-events: none;
   }
 }
@@ -336,31 +337,13 @@
   }
 }
 
+.screen--story.active {
 
-@keyframes animate-to {
-  0% {
-    transform: translateX(0);
-    opacity: 1;
+  .slider__control--prev {
+    animation: roll-in-left 0.4s ease-out both;
   }
-  80% {
-    opacity: 0.5;
-  }
-  100% {
-    transform: translateX(-50px);
-    opacity: 0;
-  }
-}
 
-@keyframes animate-from {
-  0% {
-    transform: translateX(50px);
-    opacity: 0;
-  }
-  80% {
-    opacity: 0.5;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
+  .slider__control--next {
+    animation: roll-in-right 0.4s ease-out both;
   }
 }
