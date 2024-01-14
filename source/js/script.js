@@ -51,9 +51,19 @@ window.addEventListener(`load`, function () {
     delay: true
   });
 
-
   setTimeout(() => {
     introTitleAnimated.start();
   }, 1000);
+
+  document.body.addEventListener(`screenChanged`, (e) => {
+
+    if (e.detail.screenName === `prizes`) {
+      const animateElement = document.getElementById(`primaryAwardAppear`);
+      if (!animateElement.hasAttribute(`shown`)) {
+        animateElement.setAttribute(`shown`, ``);
+        animateElement.beginElement();
+      }
+    }
+  });
 
 });

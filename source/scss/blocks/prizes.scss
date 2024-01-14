@@ -218,8 +218,17 @@
 }
 
 .prizes__icon {
+  .prizes__icon-mob{
+    display: none;
+  }
   @media (max-width: $tablet) and (orientation: portrait) {
     margin-right: 3.8rem;
+    svg{
+      display: none;
+    }
+    .prizes__icon-mob{
+      display: block;
+    }
   }
 
   img {
