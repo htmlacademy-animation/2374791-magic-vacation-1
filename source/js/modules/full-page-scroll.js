@@ -1,4 +1,5 @@
 import throttle from 'lodash/throttle';
+import {currentTheme, changePageTheme} from "./page-theme";
 
 export default class FullPageScroll {
   constructor() {
@@ -75,6 +76,16 @@ export default class FullPageScroll {
         });
       }
     }, 10);
+
+    if (this.activeScreen === 1) {
+      changePageTheme(`theme--purple`);
+    } else {
+      if (currentTheme !== `theme--main`) {
+        changePageTheme(`theme--main`);
+      }
+    }
+
+
   }
 
   changeActiveMenuItem() {

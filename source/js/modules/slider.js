@@ -1,4 +1,5 @@
 import Swiper from "swiper";
+import {currentTheme, changePageTheme} from "./page-theme";
 
 export default () => {
   let storySlider;
@@ -49,14 +50,17 @@ export default () => {
           slideChange: () => {
             if (storySlider.activeIndex === 0) {
               sliderContainer.style.backgroundImage = `url("img/slide1.jpg")`;
+              changePageTheme(`theme--purple`);
             } else if (storySlider.activeIndex === 2) {
               sliderContainer.style.backgroundImage = `url("img/slide2.jpg")`;
+              changePageTheme(`theme--blue`);
             } else if (storySlider.activeIndex === 4) {
               sliderContainer.style.backgroundImage = `url("img/slide3.jpg")`;
+              changePageTheme(`theme--light-blue`);
             } else if (storySlider.activeIndex === 6) {
               sliderContainer.style.backgroundImage = `url("img/slide4.jpg")`;
+              changePageTheme(`theme--main`);
             }
-
 
             if (storySlider.activeIndex === 0) {
               document.querySelector(`.js-control-prev`).classList.add(`swiper-button-disabled`);
@@ -102,7 +106,6 @@ export default () => {
         storySlider.$el[0].classList.remove(`is-start`);
         storySlider.$el[0].classList.add(`is-end`);
       }, 600);
-
 
     });
   });

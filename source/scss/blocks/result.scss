@@ -212,12 +212,23 @@
     font-size: 1.6rem;
   }
 
-  span {
+
+  &-text {
+    .screen--result.screen--show & {
+      animation: fade-in 0.4s ease-out both;
+    }
+  }
+
+  &-icon {
     position: relative;
     margin-left: 1.5rem;
     width: 4rem;
     height: 4rem;
     color: $c-dark;
+
+    .screen--result.screen--show & {
+      animation: roll-in-right 0.4s ease-out both;
+    }
 
     @media (min-width: $stop-scaling) {
       margin-left: 15px;
