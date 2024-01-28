@@ -51,7 +51,6 @@ window.addEventListener(`load`, function () {
     delay: true
   });
 
-
   setTimeout(() => {
     introTitleAnimated.start();
   }, 1000);

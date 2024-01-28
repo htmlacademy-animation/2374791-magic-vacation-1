@@ -85,6 +85,14 @@ export default class FullPageScroll {
       }
     }
 
+    if (this.activeScreen === 2) {
+      const animateElement = document.getElementById(`primaryAwardAppear`);
+      if (!animateElement.hasAttribute(`shown`)) {
+        animateElement.setAttribute(`shown`, ``);
+        animateElement.beginElement();
+      }
+    }
+
 
   }
 
