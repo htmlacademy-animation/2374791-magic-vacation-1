@@ -528,13 +528,15 @@
                         d="M235.77,119H216.32a35.49,35.49,0,0,0-68-13.69A26.34,26.34,0,0,0,135.43,102a26.72,26.72,0,0,0-24.8,17H95.48a10.49,10.49,0,0,0,0,21h140.3a10.49,10.49,0,0,0,0-21"
                         fill="#fff" />
                     </g>
-                    <animate attributeType="CSS" attributeName="opacity" from="1" to="0" dur=".3s" begin="secondaryAwardAppear.end + 1.1"
+                    <animate attributeType="CSS" attributeName="opacity" from="0" to="1" dur=".3s" begin="secondaryAwardAppear.end"
+                             fill="freeze" />
+                    <animate attributeType="CSS" attributeName="opacity" from="1" to="0" dur=".3s" begin="secondaryAwardAppear.end + 1.5"
                              fill="freeze" />
                     <animateTransform attributeName="transform" type="translate" from="200" to="0" dur=".5s"
                                       fill="freeze" additive="sum" begin="secondaryAwardAppear.end">
                     </animateTransform>
-                    <animateTransform attributeName="transform" type="translate" values="0 0; 0 -130" dur=".6s"
-                                      begin="secondaryAwardAppear.end + 1.1" fill="freeze" additive="sum">
+                    <animateTransform attributeName="transform" type="translate" values="0 0; 0 -130" dur=".4s"
+                                      begin="secondaryAwardAppear.end + 1.5" fill="freeze" additive="sum">
                     </animateTransform>
                   </g>
                   <g id="leaf-big" opacity="0">
