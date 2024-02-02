@@ -159,3 +159,13 @@
   }
 }
 
+@keyframes zoom-out {
+  from {
+    transform: scale(1.2);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+

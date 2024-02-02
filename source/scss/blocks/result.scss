@@ -128,6 +128,8 @@
 .result__title {
   margin: 0 auto 2rem;
   color: $c-light;
+  animation: zoom-out 500ms ease-out both;
+
 
   @media (min-width: $stop-scaling) {
     margin: 0 auto 20px;
