@@ -2920,6 +2920,13 @@ body.is-loaded .page-header__menu a.active:after {
   width: 100%;
   height: 100%;
 }
+.result__image picture img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
 
 .result__image-item {
   position: absolute;
@@ -3205,9 +3212,9 @@ body.is-loaded .page-header__menu a.active:after {
 }
 
 .result--negative .result__title {
-  margin-top: 9.5rem;
-  width: 66.5rem;
-  height: 11.3rem;
+  margin-top: -3.5rem;
+  width: 80.5rem;
+  height: 28.3rem;
 }
 @media (min-width: 2000px) {
   .result--negative .result__title {
