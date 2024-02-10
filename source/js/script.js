@@ -8,7 +8,8 @@ import result from './modules/result.js';
 import form from './modules/form.js';
 import social from './modules/social.js';
 import FullPageScroll from './modules/full-page-scroll';
-import textAnimated from "./modules/text-animation";
+import textAnimated from './modules/text-animation';
+
 
 // init modules
 mobileHeight();
@@ -54,5 +55,6 @@ window.addEventListener(`load`, function () {
   setTimeout(() => {
     introTitleAnimated.start();
   }, 1000);
+
 
 });

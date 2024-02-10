@@ -1,5 +1,6 @@
 import throttle from 'lodash/throttle';
 import {currentTheme, changePageTheme} from "./page-theme";
+import timerStart from './game-timer';
 
 export default class FullPageScroll {
   constructor() {
@@ -93,7 +94,9 @@ export default class FullPageScroll {
       }
     }
 
-
+    if (this.activeScreen === 4) {
+      timerStart();
+    }
   }
 
   changeActiveMenuItem() {
