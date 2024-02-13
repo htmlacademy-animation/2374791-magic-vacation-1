@@ -1,6 +1,8 @@
 import throttle from 'lodash/throttle';
 import {currentTheme, changePageTheme} from "./page-theme";
 import timerStart from './game-timer';
+import NumberUpAnimation from './number-up-animation';
+
 
 export default class FullPageScroll {
   constructor() {
@@ -92,6 +94,20 @@ export default class FullPageScroll {
         animateElement.setAttribute(`shown`, ``);
         animateElement.beginElement();
       }
+
+      const journeysAnimation = new NumberUpAnimation(document.querySelector(`.prizes-count-journeys`), 3, 1);
+      const casesAnimation = new NumberUpAnimation(document.querySelector(`.prizes-count-cases`), 7, 1);
+      const codesAnimation = new NumberUpAnimation(document.querySelector(`.prizes-count-codes`), 900, 180);
+      codesAnimation.setCountCurrent(11);
+
+
+      setTimeout(() => {
+        journeysAnimation.animate();
+      }, 500);
+
+      setTimeout(() => casesAnimation.animate(), 3000);
+      setTimeout(() => codesAnimation.animate(), 5500);
+
     }
 
     if (this.activeScreen === 4) {
