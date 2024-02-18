@@ -65,7 +65,7 @@ export default class FullPageScroll {
     this.screenElements[prevIndex].classList.add(`screen--prev`);
     this.screenElements[this.activeScreen].classList.remove(`screen--hidden`);
     setTimeout(() => {
-      if (this.activeScreen === 0) {
+      if (this.activeScreen === 0 || this.activeScreen === 1) {
         document.querySelector(`.animation-screen`).classList.remove(`hidden`);
       } else {
         document.querySelector(`.animation-screen`).classList.add(`hidden`);

@@ -9,6 +9,7 @@ import form from './modules/form.js';
 import social from './modules/social.js';
 import FullPageScroll from './modules/full-page-scroll';
 import textAnimated from './modules/text-animation';
+import sceneTop from './modules/3d-animation/3d-scene-top';
 
 
 // init modules
@@ -20,6 +21,13 @@ chat();
 result();
 form();
 social();
+const top = new sceneTop();
+
+document.body.addEventListener(`screenChanged`, (e) => {
+  if (e.detail.screenName === `top`) {
+    top.init();
+  }
+});
 
 const fullPageScroll = new FullPageScroll();
 fullPageScroll.init();
