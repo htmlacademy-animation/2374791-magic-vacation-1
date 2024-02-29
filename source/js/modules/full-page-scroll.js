@@ -3,6 +3,8 @@ import {currentTheme, changePageTheme} from "./page-theme";
 import timerStart from './game-timer';
 import NumberUpAnimation from './number-up-animation';
 import {plainMeshController} from './3d-animation/plainMeshController';
+import {scene} from './3d-animation/initAnimationScreen';
+import {sphere} from './3d-animation/sphere';
 
 export default class FullPageScroll {
   constructor() {
@@ -117,10 +119,10 @@ export default class FullPageScroll {
     const prevActiveScreen = document.querySelector(`.screen.active`);
     const nextActiveScreen = this.screenElements[this.activeScreen];
 
-    plainMeshController.clearScene();
+    scene.clearScene();
 
     if (nextActiveScreen.classList.contains(`screen--intro`)) {
-      plainMeshController.addScreenMesh(`intro`);
+      sphere.addScreenMesh(`intro`);
     } else if (nextActiveScreen.classList.contains(`screen--story`)) {
       plainMeshController.addScreenMesh(`story`).then(() => {
         plainMeshController.setStoryActiveMesh();
