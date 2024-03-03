@@ -4,7 +4,7 @@ import timerStart from './game-timer';
 import NumberUpAnimation from './number-up-animation';
 import {plainMeshController} from './3d-animation/plainMeshController';
 import {scene} from './3d-animation/initAnimationScreen';
-import {sphere} from './3d-animation/sphere';
+// import {sphere} from './3d-animation/sphere';
 import {sceneController} from './3d-animation/sceneController';
 
 export default class FullPageScroll {
@@ -123,10 +123,10 @@ export default class FullPageScroll {
     scene.clearScene();
 
     if (nextActiveScreen.classList.contains(`screen--intro`)) {
-      sphere.addScreenMesh(`intro`);
+      sceneController.addScreenMesh();
     } else if (nextActiveScreen.classList.contains(`screen--story`)) {
       plainMeshController.addScreenMesh(`story`).then(() => {
-        sceneController.addScreenMesh();
+        plainMeshController.setStoryActiveMesh();
       });
     }
 
