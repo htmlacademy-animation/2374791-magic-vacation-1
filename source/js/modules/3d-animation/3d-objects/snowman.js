@@ -1,8 +1,14 @@
 import * as THREE from 'three';
 
 export class Snowman extends THREE.Group {
-  constructor() {
+  constructor(options) {
     super();
+    this.colorSphere = options.colorSphere;
+    this.metalnessSphere = options.metalnessSphere;
+    this.roughnessSphere = options.roughnessSphere;
+    this.colorCone = options.colorCone;
+    this.metalnessCone = options.metalnessCone;
+    this.roughnessCone = options.roughnessCone;
     this.constructChildren();
   }
 
@@ -14,10 +20,10 @@ export class Snowman extends THREE.Group {
 
   addTopSphere() {
     const material = new THREE.MeshStandardMaterial({
-      color: 0xffffff,
-      metalness: 0.05,
+      color: new THREE.Color(this.colorSphere),
+      metalness: this.metalnessSphere,
+      roughness: this.roughnessSphere,
       emissive: 0x243452,
-      roughness: 0.7
     });
     const geometry = new THREE.SphereGeometry(44, 30, 30);
     const mesh = new THREE.Mesh(geometry, material);
@@ -26,10 +32,10 @@ export class Snowman extends THREE.Group {
 
   addBottomSphere() {
     const material = new THREE.MeshStandardMaterial({
-      color: 0xffffff,
-      metalness: 0.05,
+      color: new THREE.Color(this.colorSphere),
+      metalness: this.metalnessSphere,
+      roughness: this.roughnessSphere,
       emissive: 0x243452,
-      roughness: 0.7
     });
     const geometry = new THREE.SphereGeometry(78, 30, 30);
     const mesh = new THREE.Mesh(geometry, material);
@@ -39,10 +45,9 @@ export class Snowman extends THREE.Group {
 
   addCone() {
     const material = new THREE.MeshStandardMaterial({
-      color: 0xfe4601,
-      metalness: 0.05,
-      emissive: 0x000000,
-      roughness: 0.7
+      color: new THREE.Color(this.colorCone),
+      metalness: this.metalnessCone,
+      roughness: this.roughnessCone
     });
     const geometry = new THREE.ConeGeometry(18, 75, 30);
     const mesh = new THREE.Mesh(geometry, material);
