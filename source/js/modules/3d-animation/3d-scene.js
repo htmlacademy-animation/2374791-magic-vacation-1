@@ -139,8 +139,6 @@ export class Scene3d {
     this.meshObjects.add(meshObject);
     this.scene.add(meshObject);
     this.render();
-    // TODO
-    console.log(`test`);
   }
 
   setSceneObjects(...meshObjects) {
