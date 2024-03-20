@@ -1,12 +1,13 @@
 import * as THREE from 'three';
+import {color3D, reflection3D} from '../../../helpers/3d-data';
 
 export class Lantern extends THREE.Group {
-  constructor(options) {
+  constructor() {
     super();
-    this.lanternColor = options.lanternColor;
-    this.lampColor = options.lampColor;
-    this.metalness = options.metalness;
-    this.roughness = options.roughness;
+    this.lanternColor = color3D.Blue;
+    this.lampColor = color3D.LightBlue;
+    this.metalness = reflection3D.soft.metalness;
+    this.roughness = reflection3D.soft.roughness;
     this.constructChildren();
   }
 
