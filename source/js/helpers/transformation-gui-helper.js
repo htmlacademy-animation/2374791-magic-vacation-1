@@ -16,36 +16,36 @@ export class TransformationGuiHelper extends GUI {
 
     if (typeof transformParams.transformX === `number`) {
       objectTransform
-        .add(transformParams, `transformX`, -1000, 1000, 10)
+        .add(transformParams, `transformX`, 3000, 3000, 10)
         .onChange((data) => {
           object.position.set(
-            data,
-            transformParams.transformY || 0,
-            transformParams.transformZ || 0
+              data,
+              transformParams.transformY || 0,
+              transformParams.transformZ || 0
           );
         });
     }
 
     if (typeof transformParams.transformY === `number`) {
       objectTransform
-        .add(transformParams, `transformY`, -1000, 1000, 10)
+        .add(transformParams, `transformY`, -3000, 3000, 10)
         .onChange((data) => {
           object.position.set(
-            transformParams.transformX || 0,
-            data,
-            transformParams.transformZ || 0
+              transformParams.transformX || 0,
+              data,
+              transformParams.transformZ || 0
           );
         });
     }
 
     if (typeof transformParams.transformZ === `number`) {
       objectTransform
-        .add(transformParams, `transformZ`, -1000, 1000, 10)
+        .add(transformParams, `transformZ`, -3000, 3000, 10)
         .onChange((data) => {
           object.position.set(
-            transformParams.transformX || 0,
-            transformParams.transformY || 0,
-            data
+              transformParams.transformX || 0,
+              transformParams.transformY || 0,
+              data
           );
         });
     }
@@ -57,9 +57,9 @@ export class TransformationGuiHelper extends GUI {
         .add(transformParams, `rotateX`, -Math.PI, Math.PI, 0.1)
         .onChange((data) => {
           object.rotation.set(
-            data,
-            transformParams.rotateY || 0,
-            transformParams.rotateZ || 0
+              data,
+              transformParams.rotateY || 0,
+              transformParams.rotateZ || 0
           );
         });
     }
@@ -69,9 +69,9 @@ export class TransformationGuiHelper extends GUI {
         .add(transformParams, `rotateY`, -Math.PI, Math.PI, 0.1)
         .onChange((data) => {
           object.rotation.set(
-            transformParams.rotateX || 0,
-            data,
-            transformParams.rotateZ || 0
+              transformParams.rotateX || 0,
+              data,
+              transformParams.rotateZ || 0
           );
         });
     }
@@ -81,9 +81,9 @@ export class TransformationGuiHelper extends GUI {
         .add(transformParams, `rotateZ`, -Math.PI, Math.PI, 0.1)
         .onChange((data) => {
           object.rotation.set(
-            transformParams.rotateX || 0,
-            transformParams.rotateY || 0,
-            data
+              transformParams.rotateX || 0,
+              transformParams.rotateY || 0,
+              data
           );
         });
     }
