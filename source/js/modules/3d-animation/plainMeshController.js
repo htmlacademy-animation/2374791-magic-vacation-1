@@ -120,7 +120,7 @@ export const plainMeshController = {
   setMeshTransformations(mesh, index) {
     const transformations = [];
 
-    scene.clearTransformationsLoop();
+    scene.clearAnimations();
 
     if (index === 1) {
 
@@ -158,6 +158,6 @@ export const plainMeshController = {
       transformations.push(transformationCallback);
     }
 
-    scene.addTransformationsToLoop(transformations);
+    scene.addAnimations(...transformations);
   },
 };

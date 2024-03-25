@@ -123,7 +123,8 @@ export default class FullPageScroll {
     scene.clearScene();
 
     if (nextActiveScreen.classList.contains(`screen--intro`)) {
-      sceneController.addScreenMesh();
+      // sceneController.addScreenMesh();
+      sceneController.addScene();
     } else if (nextActiveScreen.classList.contains(`screen--story`)) {
       plainMeshController.addScreenMesh(`story`).then(() => {
         plainMeshController.setStoryActiveMesh();
