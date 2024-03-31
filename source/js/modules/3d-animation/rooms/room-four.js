@@ -4,10 +4,14 @@ import {MATERIAL_TYPE, OBJECT_ELEMENTS, SVG_ELEMENTS} from "../../../helpers/con
 import {MaterialCreator} from "../material-creator";
 import {Saturn} from '../3d-objects/saturn';
 import {Carpet} from '../3d-objects/carpet';
+import Animation from '../../2d-animation/animation-2d';
+import {degreesToRadians} from "../../../helpers/utils";
+import easing from '../../../helpers/easing';
+
 
 export class RoomFourScene extends RoomScene {
-  constructor(pageSceneCreator) {
-    super(pageSceneCreator);
+  constructor(pageSceneCreator, animationManager) {
+    super(pageSceneCreator, animationManager);
 
     this.wall = {
       name: OBJECT_ELEMENTS.wallCorner,
@@ -58,13 +62,15 @@ export class RoomFourScene extends RoomScene {
         ),
       },
       transform: {
-        transformX: 60,
-        transformY: 410,
-        transformZ: 440,
-
-        rotateX: Math.PI,
-        rotateY: -Math.PI / 2,
-
+        position: {
+          x: 60,
+          y: 410,
+          z: 440,
+        },
+        rotation: {
+          x: Math.PI,
+          y: -Math.PI / 2,
+        },
         scale: 1,
       },
     };
@@ -81,12 +87,14 @@ export class RoomFourScene extends RoomScene {
     });
 
     const transform = {
-      transformX: 350,
-      transformY: 500,
-      transformZ: 280,
-
-      rotateY: -Math.PI / 2,
-
+      position: {
+        x: 350,
+        y: 500,
+        z: 280,
+      },
+      rotation: {
+        y: -Math.PI / 2,
+      },
       scale: 1,
     };
 
@@ -103,17 +111,61 @@ export class RoomFourScene extends RoomScene {
 
   addSonya() {
     this.pageSceneCreator.createObjectMesh(
-        {
-          name: OBJECT_ELEMENTS.sonya,
-          transform: {
-            transformX: 440,
-            transformY: 120,
-            transformZ: 280,
+      {
+        name: OBJECT_ELEMENTS.sonya,
+        transform: {
+          position: {
+            x: 440,
+            y: 120,
+            z: 280,
           },
         },
-        (obj) => {
-          this.addObject(obj);
-        }
+      },
+      (sonya) => {
+        this.animationManager.addAnimations(
+          new Animation({
+            func: (_, {startTime, currentTime}) => {
+              sonya.position.y =
+                120 + 10 * Math.sin((currentTime - startTime) / 500);
+            },
+            duration: `infinite`,
+            easing: easing.easeInOutSine,
+          })
+        );
+
+        sonya.traverse((obj) => {
+          if (obj.name === `RightHand`) {
+            this.animationManager.addAnimations(
+              new Animation({
+                func: (_, {startTime, currentTime}) => {
+                  obj.rotation.y =
+                    degreesToRadians(-55) +
+                    degreesToRadians(5) *
+                    Math.cos(1.5 + (currentTime - startTime) / 500);
+                },
+                duration: `infinite`,
+                easing: easing.easeInQuad,
+              })
+            );
+          } else if (obj.name === `LeftHand`) {
+            this.animationManager.addAnimations(
+              new Animation({
+                func: (_, {startTime, currentTime}) => {
+                  obj.rotation.y =
+                    degreesToRadians(55) +
+                    degreesToRadians(5) *
+                    Math.cos(-1.5 + (currentTime - startTime) / 500);
+                },
+                duration: `infinite`,
+                easing: easing.easeInQuad,
+              })
+            );
+          }
+        });
+
+        this.addObject(sonya);
+        this.animationManager.startAnimations();
+      }
     );
   }
 }

@@ -5,15 +5,16 @@ function getCurrentTransformPropertyByName(
     obj,
     propertyName,
     propertyDirection,
+    transformFrom,
     transformTo,
     progress
 ) {
   const defaultValue = propertyName === `scale` ? 1 : 0;
 
   const fromValue =
-    obj[propertyName] &&
-    typeof obj[propertyName][propertyDirection] === `number`
-      ? obj[propertyName][propertyDirection]
+    transformFrom[propertyName] &&
+    typeof transformFrom[propertyName][propertyDirection] === `number`
+      ? transformFrom[propertyName][propertyDirection]
       : defaultValue;
 
   return transformTo[propertyName] &&
@@ -24,36 +25,50 @@ function getCurrentTransformPropertyByName(
 }
 
 export function createObjectTransformAnimation(obj, transformTo, config) {
+  let transformFrom;
   return new Animation({
     func: (progress) => {
+      if (!transformFrom) {
+        transformFrom = {
+          position: {...obj.position},
+          rotation: {
+            x: obj.rotation.x,
+            y: obj.rotation.y,
+            z: obj.rotation.z,
+          },
+          scale: {...obj.scale},
+        };
+      }
+
       obj.position.set(
           ...[`x`, `y`, `z`].map((propertyDirection) =>
             getCurrentTransformPropertyByName(
-                obj,
                 `position`,
                 propertyDirection,
+                transformFrom,
                 transformTo,
                 progress
             )
           )
       );
+
       obj.rotation.set(
           ...[`x`, `y`, `z`].map((propertyDirection) =>
             getCurrentTransformPropertyByName(
-                obj,
                 `rotation`,
                 propertyDirection,
+                transformFrom,
+                transformTo,
                 progress
             )
           )
       );
-
       obj.scale.set(
           ...[`x`, `y`, `z`].map((propertyDirection) =>
             getCurrentTransformPropertyByName(
-                obj,
                 `scale`,
                 propertyDirection,
+                transformFrom,
                 typeof transformTo.scale === `number`
                   ? {
                     scale: {
