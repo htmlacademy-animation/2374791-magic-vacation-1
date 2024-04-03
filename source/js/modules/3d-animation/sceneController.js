@@ -72,6 +72,7 @@ export const sceneController = {
   },
 
   addScene() {
-    this.addRoomsPageScene();
+    this.addMainPageScene();
+    // this.addRoomsPageScene();
   },
 };
