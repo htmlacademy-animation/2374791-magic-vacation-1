@@ -5,6 +5,7 @@ import {Saturn} from "./3d-objects/saturn";
 import easing from "../../helpers/easing";
 import Animation from "../2d-animation/animation-2d";
 import {createBounceAnimation, createObjectTransformAnimation} from "./animation-creator";
+import {Airplane} from "./3d-objects/airplane";
 
 
 export class MainPageComposition extends THREE.Group {
@@ -209,26 +210,6 @@ export class MainPageComposition extends THREE.Group {
           scale: 1.8,
         },
       },
-      // {
-      //   name: OBJECT_ELEMENTS.airplane,
-      //   transform: {
-      //     transformX: 190,
-      //     transformY: 120,
-      //     transformZ: 70,
-
-      //     rotateX: 0.7,
-      //     rotateY: 2.4,
-      //     rotateZ: 0,
-
-      //     scale: 1,
-      //   },
-      //   material: this.pageSceneCreator.materialCreator.create(
-      //       MATERIAL_TYPE.BasicMaterial,
-      //       {
-      //         color: MaterialCreator.Colors.White,
-      //       }
-      //   ),
-      // },
       {
         name: OBJECT_ELEMENTS.suitcase,
         enableGui: true,
@@ -246,7 +227,56 @@ export class MainPageComposition extends THREE.Group {
     this.addExtrudedSvgObjects();
     this.addPlaneMeshBehindKeyhole();
     this.addSaturn();
+    this.addAirplane();
   }
+
+  addAirplane() {
+    const airplane = new Airplane(this.pageSceneCreator);
+
+    airplane.position.x = 135;
+
+    const initialFightRadius = airplane.flightRadius;
+    const initialFightHeight = airplane.flightHeight;
+    const initialRigRotationY = airplane.rigRotationY;
+    const initialPlaneRotationZ = airplane.planeRotationZ;
+    const initialPlaneIncline = airplane.planeIncline;
+
+    this.animationManager.addAnimations(
+        new Animation({
+          func: (progress) => {
+            airplane.flightRadius =
+            initialFightRadius +
+            (airplane.maxFlightRadius - initialFightRadius) * progress;
+
+            airplane.flightHeight =
+            initialFightHeight +
+            (airplane.maxFlightHeight - initialFightHeight) * progress;
+
+            airplane.rigRotationY =
+            initialRigRotationY + (progress * 5 * Math.PI) / 4;
+
+            airplane.planeRotationZ =
+            progress < 0.5
+              ? initialPlaneRotationZ - progress * Math.PI
+              : initialPlaneRotationZ -
+              0.5 * Math.PI +
+              (progress - 0.5) * Math.PI;
+
+            airplane.planeIncline =
+            initialPlaneIncline + (progress * Math.PI) / 5;
+
+            airplane.invalidate(progress);
+          },
+          duration: 2000,
+          delay: 1400,
+          easing: easing.easeOutExpo,
+        }),
+        createBounceAnimation(airplane)
+    );
+
+    this.addMesh(airplane);
+  }
+
   addMeshObjects() {
     this.meshObjects.forEach((config) => {
       this.pageSceneCreator.createObjectMesh(config, this.addObject(config));
