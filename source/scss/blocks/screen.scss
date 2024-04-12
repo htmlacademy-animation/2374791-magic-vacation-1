@@ -36,8 +36,8 @@
 }
 
 .animation-screen{
-  z-index: 999;
-  background-color: $c-dark;
+  //z-index: 999;
+  //background-color: $c-dark;
 }
 
 
@@ -343,7 +343,7 @@
   //background-position: center;
 
   &.screen--prev {
-    opacity: 1;
+    //opacity: 1;
   }
 
   //@media (orientation: portrait) {

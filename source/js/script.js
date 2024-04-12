@@ -9,6 +9,8 @@ import form from './modules/form.js';
 import social from './modules/social.js';
 import FullPageScroll from './modules/full-page-scroll';
 import textAnimated from './modules/text-animation';
+import {SceneController} from './modules/3d-animation/sceneController';
+
 
 // init modules
 mobileHeight();
@@ -19,6 +21,8 @@ chat();
 result();
 form();
 social();
+
+export const sceneController = new SceneController();
 
 const fullPageScroll = new FullPageScroll();
 fullPageScroll.init();
@@ -55,5 +59,8 @@ window.addEventListener(`load`, function () {
     introTitleAnimated.start();
   }, 1000);
 
+  setTimeout(()=>{
+    document.body.classList.add(`loaded`);
+  }, 2000);
 
 });
