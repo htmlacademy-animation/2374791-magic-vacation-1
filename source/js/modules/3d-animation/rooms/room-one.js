@@ -31,12 +31,10 @@ export class RoomOneScene extends RoomScene {
           }
       ),
     };
-
     this.staticOutput = {
       name: OBJECT_ELEMENTS.staticOutput1,
     };
   }
-
   async constructChildren() {
     await super.constructChildren();
 
@@ -45,7 +43,6 @@ export class RoomOneScene extends RoomScene {
     this.addCarpet();
     await this.addDog();
   }
-
   async addFlower() {
     const config = {
       name: SVG_ELEMENTS.flower,
@@ -73,7 +70,6 @@ export class RoomOneScene extends RoomScene {
         scale: 1,
       },
     };
-
     const obj = await this.pageSceneCreator.createExtrudedSvgMesh(config);
 
     this.addObject(obj);
@@ -96,7 +92,6 @@ export class RoomOneScene extends RoomScene {
       rotation: {
         y: -Math.PI / 2,
       },
-
       scale: 1,
     };
 
@@ -153,10 +148,8 @@ export class RoomOneScene extends RoomScene {
 
   addCarpet() {
     const carpet = new Carpet(this.pageSceneCreator);
-
     this.addObject(carpet);
   }
-
   async addDog() {
     const dog = await this.pageSceneCreator.createObjectMesh({
       name: OBJECT_ELEMENTS.dog,
@@ -175,19 +168,19 @@ export class RoomOneScene extends RoomScene {
     dog.traverse((obj) => {
       if (obj.name === `Tail`) {
         this.animationManager.addRoomsPageAnimations(
-          0,
-          new Animation({
-            func: (_, {startTime, currentTime}) => {
-              const time = ((currentTime - startTime) / 70) % (Math.PI * 6.5);
-              if (time > 0 && time < Math.PI) {
-                obj.rotation.x = (degreesToRadians(30) * time) / Math.PI;
-              } else {
-                obj.rotation.x = -degreesToRadians(30) * Math.cos(time);
-              }
-            },
-            duration: `infinite`,
-            easing: easing.easeLinear,
-          })
+            0,
+            new Animation({
+              func: (_, {startTime, currentTime}) => {
+                const time = ((currentTime - startTime) / 70) % (Math.PI * 6.5);
+                if (time > 0 && time < Math.PI) {
+                  obj.rotation.x = (degreesToRadians(30) * time) / Math.PI;
+                } else {
+                  obj.rotation.x = -degreesToRadians(30) * Math.cos(time);
+                }
+              },
+              duration: `infinite`,
+              easing: easing.easeLinear,
+            })
         );
       }
     });

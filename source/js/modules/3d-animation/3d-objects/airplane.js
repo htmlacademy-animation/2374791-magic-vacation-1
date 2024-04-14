@@ -17,10 +17,10 @@ export class Airplane extends THREE.Group {
         scale: 1,
       },
       material: this.pageSceneCreator.materialCreator.create(
-          MATERIAL_TYPE.BasicMaterial,
-          {
-            color: MaterialCreator.Colors.White,
-          }
+        MATERIAL_TYPE.BasicMaterial,
+        {
+          color: MaterialCreator.Colors.White,
+        }
       ),
     };
 
@@ -37,8 +37,6 @@ export class Airplane extends THREE.Group {
     this._planeRotationZChanged = true;
     this._planeIncline = 0;
     this._planeInclineChanged = true;
-
-    // this.addAirplaneObject();
   }
 
   async constructRig() {
@@ -158,3 +156,4 @@ export class Airplane extends THREE.Group {
     }
   }
 }
+

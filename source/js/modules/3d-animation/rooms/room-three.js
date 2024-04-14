@@ -33,7 +33,6 @@ export class RoomThreeScene extends RoomScene {
     this.staticOutput = {
       name: OBJECT_ELEMENTS.staticOutput3,
     };
-
   }
 
   async constructChildren() {
@@ -105,7 +104,6 @@ export class RoomThreeScene extends RoomScene {
         this.addObject(clone);
       });
   }
-
   async addCompass() {
     const compass = await this.pageSceneCreator.createObjectMesh({
       name: OBJECT_ELEMENTS.compass,
@@ -114,16 +112,16 @@ export class RoomThreeScene extends RoomScene {
     compass.traverse((obj) => {
       if (obj.name === `Compas`) {
         this.animationManager.addRoomsPageAnimations(
-          2,
-          new Animation({
-            func: (_, {startTime, currentTime}) => {
-              obj.rotation.z =
+            2,
+            new Animation({
+              func: (_, {startTime, currentTime}) => {
+                obj.rotation.z =
                 degreesToRadians(10) *
                 Math.sin((currentTime - startTime) / 1000);
-            },
-            duration: `infinite`,
-            easing: easing.easeInQuad,
-          })
+              },
+              duration: `infinite`,
+              easing: easing.easeInQuad,
+            })
         );
       }
     });

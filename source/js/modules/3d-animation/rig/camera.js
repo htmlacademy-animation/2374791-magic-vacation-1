@@ -35,18 +35,16 @@ export class CameraRig extends THREE.Group {
     return -4750;
   }
 
-  constructor(stateParameters) {
+  constructor(stateParameters, sceneController) {
     super();
 
     this.stateParameters = stateParameters;
-
     this.sceneController = sceneController;
 
     this.keyholeCover = sceneController.mainPageScene.children.find(
         ({name}) => name === `keyholeCover`
     );
 
-    // Set internal parameters
     this._depth = this.stateParameters.depth || 0;
     this._rotationAxisYAngle = this.stateParameters.rotationAxisYAngle || 0;
     this._horizonIncline = this.stateParameters.horizonIncline || 0;
@@ -61,17 +59,14 @@ export class CameraRig extends THREE.Group {
 
     this.position.z = 0;
 
-    // Set Rig to the initial state
     this.invalidate();
   }
 
   constructRigElements() {
-    // Construct parts
     const depthTrack = new THREE.Group();
     const rotationAxis = new THREE.Group();
     const cameraNull = new THREE.Group();
 
-    // Connect
     this.add(rotationAxis);
     rotationAxis.add(depthTrack);
     depthTrack.add(cameraNull);
@@ -91,7 +86,6 @@ export class CameraRig extends THREE.Group {
     }
     this._depth = value;
     this._depthChanged = true;
-
     if (this.keyholeCover) {
       let opacity;
 

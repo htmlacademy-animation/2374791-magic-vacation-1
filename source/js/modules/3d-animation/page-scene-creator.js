@@ -31,8 +31,8 @@ export class PageSceneCreator {
 
   async createExtrudedSvgMesh(config) {
     const obj = await this.extrudeSvgCreator.create(
-      config.name,
-      config.extrude
+        config.name,
+        config.extrude
     );
 
     if (config.transform) {
@@ -61,3 +61,4 @@ export class PageSceneCreator {
     });
   }
 }
+

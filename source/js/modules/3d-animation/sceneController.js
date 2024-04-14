@@ -1,4 +1,4 @@
-// import * as THREE from 'three';
+import * as THREE from 'three';
 import {scene} from './initAnimationScreen';
 import {SvgLoader} from "./svg-objects/svg-insert";
 import {EXTRUDE_SETTINGS, SVG_ELEMENTS, OBJECT_ELEMENTS} from "../../helpers/constants";
@@ -19,15 +19,15 @@ const materialCreator = new MaterialCreator();
 const latheGeometryCreator = new LatheGeometryCreator();
 const svgShapeLoader = new SvgLoader(SVG_ELEMENTS);
 const extrudeSvgCreator = new ExtrudeSvgCreator(
-    svgShapeLoader,
-    EXTRUDE_SETTINGS
+  svgShapeLoader,
+  EXTRUDE_SETTINGS
 );
 const objectCreator = new ObjectsCreator();
 const pageSceneCreator = new PageSceneCreator(
-    materialCreator,
-    extrudeSvgCreator,
-    objectCreator,
-    latheGeometryCreator
+  materialCreator,
+  extrudeSvgCreator,
+  objectCreator,
+  latheGeometryCreator
 );
 
 const animationManager = new AnimationManager();
@@ -67,8 +67,8 @@ export class SceneController {
 
   async addRoomsPageScene() {
     this.roomsPageScene = new RoomsPageScene(
-        pageSceneCreator,
-        animationManager
+      pageSceneCreator,
+      animationManager
     );
     await this.roomsPageScene.constructChildren();
     this.roomsPageScene.position.set(0, -330, 0);
@@ -105,84 +105,84 @@ export class SceneController {
     });
 
     animationManager.addSuitcaseAnimations(
-        createObjectTransformAnimation(
-            suitcase,
-            {
-              position: {
-                y: 0,
-              },
-              scale: {
-                x: 0.95,
-                y: 1.1,
-                z: 0.95,
-              },
-            },
-            {
-              duration: 300,
-              easing: easing.easeInCubic,
-            }
-        ),
-        createObjectTransformAnimation(
-            suitcase,
-            {
-              position: {
-                y: 2,
-              },
-              scale: {
-                x: 1.05,
-                y: 0.93,
-                z: 1.05,
-              },
-            },
-            {
-              duration: 150,
-              delay: 300,
-              easing: easing.easeOutCubic,
-            }
-        ),
-        createObjectTransformAnimation(
-            suitcase,
-            {
-              position: {
-                y: 1,
-              },
-              scale: {
-                x: 0.98,
-                y: 1.04,
-                z: 0.98,
-              },
-            },
-            {
-              duration: 150,
-              delay: 450,
-              easing: easing.easeInOutSine,
-            }
-        ),
-        createObjectTransformAnimation(
-            suitcase,
-            {
-              position: {
-                y: 0,
-              },
-              scale: {
-                x: 1,
-                y: 1,
-                z: 1,
-              },
-            },
-            {
-              duration: 150,
-              delay: 600,
-              easing: easing.easeInCubic,
-            }
-        )
+      createObjectTransformAnimation(
+        suitcase,
+        {
+          position: {
+            y: 0,
+          },
+          scale: {
+            x: 0.95,
+            y: 1.1,
+            z: 0.95,
+          },
+        },
+        {
+          duration: 300,
+          easing: easing.easeInCubic,
+        }
+      ),
+      createObjectTransformAnimation(
+        suitcase,
+        {
+          position: {
+            y: 2,
+          },
+          scale: {
+            x: 1.05,
+            y: 0.93,
+            z: 1.05,
+          },
+        },
+        {
+          duration: 150,
+          delay: 300,
+          easing: easing.easeOutCubic,
+        }
+      ),
+      createObjectTransformAnimation(
+        suitcase,
+        {
+          position: {
+            y: 1,
+          },
+          scale: {
+            x: 0.98,
+            y: 1.04,
+            z: 0.98,
+          },
+        },
+        {
+          duration: 150,
+          delay: 450,
+          easing: easing.easeInOutSine,
+        }
+      ),
+      createObjectTransformAnimation(
+        suitcase,
+        {
+          position: {
+            y: 0,
+          },
+          scale: {
+            x: 1,
+            y: 1,
+            z: 1,
+          },
+        },
+        {
+          duration: 150,
+          delay: 600,
+          easing: easing.easeInCubic,
+        }
+      )
     );
   }
 
   addCameraRig(startSceneIndex) {
     this.cameraRig = new CameraRig(
-        CameraRig.getCameraRigStageState(startSceneIndex),
-        this
+      CameraRig.getCameraRigStageState(startSceneIndex),
+      this
     );
 
     this.cameraRig.addObjectToCameraNull(scene.camera);
@@ -212,10 +212,10 @@ export class SceneController {
     }
 
     this.cameraRig.changeStateTo(
-        CameraRig.getCameraRigStageState(index || this.previousRoomSceneIndex)
+      CameraRig.getCameraRigStageState(index || this.previousRoomSceneIndex)
     );
     animationManager.startRoomAnimations(
-        (index || this.previousRoomSceneIndex) - 1
+      (index || this.previousRoomSceneIndex) - 1
     );
 
     setTimeout(() => {
@@ -226,3 +226,4 @@ export class SceneController {
     }, 800);
   }
 }
+

@@ -184,7 +184,6 @@ export class MainPageComposition extends THREE.Group {
         },
       },
     ];
-
     this.meshObjects = [
       {
         name: OBJECT_ELEMENTS.watermelon,
@@ -219,9 +218,7 @@ export class MainPageComposition extends THREE.Group {
         },
       },
     ];
-
   }
-
   async constructChildren() {
     await this.addMeshObjects();
     await this.addExtrudedSvgObjects();
@@ -231,7 +228,6 @@ export class MainPageComposition extends THREE.Group {
 
     await this.addAirplane();
   }
-
   async addAirplane() {
     const airplane = new Airplane(this.pageSceneCreator);
     await airplane.constructRig();
@@ -278,23 +274,22 @@ export class MainPageComposition extends THREE.Group {
 
     this.addMesh(airplane);
   }
-
   async addMeshObjects() {
     await Promise.all(
-      this.meshObjects.map(async (config) => {
-        const obj = await this.pageSceneCreator.createObjectMesh(config);
+        this.meshObjects.map(async (config) => {
+          const obj = await this.pageSceneCreator.createObjectMesh(config);
 
-        this.addObject(config)(obj);
-      })
+          this.addObject(config)(obj);
+        })
     );
   }
   async addExtrudedSvgObjects() {
     await Promise.all(
-      this.meshExtrudedObjects.map(async (config) => {
-        const obj = await this.pageSceneCreator.createExtrudedSvgMesh(config);
+        this.meshExtrudedObjects.map(async (config) => {
+          const obj = await this.pageSceneCreator.createExtrudedSvgMesh(config);
 
-        this.addObject(config)(obj);
-      })
+          this.addObject(config)(obj);
+        })
     );
   }
 
@@ -316,26 +311,21 @@ export class MainPageComposition extends THREE.Group {
             })
         );
       }
-
       if (config.bounceAnimation) {
         this.animationManager.addMainPageAnimations(createBounceAnimation(obj));
       }
-
       this.addMesh(obj);
     };
   }
-
   addSaturn() {
     const saturn = new Saturn(this.pageSceneCreator.materialCreator, {
       darkMode: false,
       withRope: false,
     });
-
     this.pageSceneCreator.setTransformParams(saturn, {
       rotation: {y: 3.6, z: 1},
       scale: 0,
     });
-
     this.animationManager.addMainPageAnimations(
         createObjectTransformAnimation(
             saturn,
@@ -351,9 +341,7 @@ export class MainPageComposition extends THREE.Group {
             }
         )
     );
-
     this.animationManager.addMainPageAnimations(createBounceAnimation(saturn));
-
     this.addMesh(saturn);
   }
 
@@ -364,16 +352,7 @@ export class MainPageComposition extends THREE.Group {
   }
 
   addMesh(mesh) {
-    this.objectsLoaded++;
-
     this.add(mesh);
-
-    if (
-      this.objectsLoaded ===
-      this.meshObjects.length + this.meshExtrudedObjects.length + 2
-    ) {
-      this.animationManager.startAnimations();
-    }
   }
 
   addSuitCaseAnimation(suitcase) {

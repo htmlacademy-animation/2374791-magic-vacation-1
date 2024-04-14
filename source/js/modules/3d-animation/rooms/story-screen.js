@@ -7,7 +7,6 @@ export class RoomsPageScene extends THREE.Group {
 
     this.pageSceneCreator = pageSceneCreator;
     this.animationManager = animationManager;
-
   }
 
   async constructChildren() {

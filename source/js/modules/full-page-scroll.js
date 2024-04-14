@@ -2,7 +2,7 @@ import throttle from 'lodash/throttle';
 import {currentTheme, changePageTheme} from "./page-theme";
 import timerStart from './game-timer';
 import NumberUpAnimation from './number-up-animation';
-import {plainMeshController} from './3d-animation/plainMeshController';
+// import {plainMeshController} from './3d-animation/plainMeshController';
 // import {scene} from './3d-animation/initAnimationScreen';
 // import {sphere} from './3d-animation/sphere';
 import {sceneController} from '../script';

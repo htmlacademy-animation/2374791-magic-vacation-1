@@ -34,10 +34,8 @@ export class RoomFourScene extends RoomScene {
     this.staticOutput = {
       name: OBJECT_ELEMENTS.staticOutput4,
     };
-
     // this.constructChildren();
   }
-
   async constructChildren() {
     await super.constructChildren();
 
@@ -74,12 +72,10 @@ export class RoomFourScene extends RoomScene {
         scale: 1,
       },
     };
-
     const obj = await this.pageSceneCreator.createExtrudedSvgMesh(config);
 
     this.addObject(obj);
   }
-
   addDarkSaturn() {
     const saturn = new Saturn(this.pageSceneCreator.materialCreator, {
       darkMode: true,
@@ -97,18 +93,13 @@ export class RoomFourScene extends RoomScene {
       },
       scale: 1,
     };
-
     this.pageSceneCreator.setTransformParams(saturn, transform);
-
     this.addObject(saturn);
   }
-
   addCarpet() {
     const carpet = new Carpet(this.pageSceneCreator);
-
     this.addObject(carpet);
   }
-
   async addSonya() {
     const sonya = await this.pageSceneCreator.createObjectMesh({
       name: OBJECT_ELEMENTS.sonya,
@@ -122,45 +113,45 @@ export class RoomFourScene extends RoomScene {
     });
 
     this.animationManager.addRoomsPageAnimations(
-      3,
-      new Animation({
-        func: (_, {startTime, currentTime}) => {
-          sonya.position.y =
+        3,
+        new Animation({
+          func: (_, {startTime, currentTime}) => {
+            sonya.position.y =
             120 + 10 * Math.sin((currentTime - startTime) / 500);
-        },
-        duration: `infinite`,
-        easing: easing.easeInOutSine,
-      })
+          },
+          duration: `infinite`,
+          easing: easing.easeInOutSine,
+        })
     );
 
     sonya.traverse((obj) => {
       if (obj.name === `RightHand`) {
         this.animationManager.addRoomsPageAnimations(
-          3,
-          new Animation({
-            func: (_, {startTime, currentTime}) => {
-              obj.rotation.y =
+            3,
+            new Animation({
+              func: (_, {startTime, currentTime}) => {
+                obj.rotation.y =
                 degreesToRadians(-55) +
                 degreesToRadians(5) *
                 Math.cos(1.5 + (currentTime - startTime) / 500);
-            },
-            duration: `infinite`,
-            easing: easing.easeInQuad,
-          })
+              },
+              duration: `infinite`,
+              easing: easing.easeInQuad,
+            })
         );
       } else if (obj.name === `LeftHand`) {
         this.animationManager.addRoomsPageAnimations(
-          3,
-          new Animation({
-            func: (_, {startTime, currentTime}) => {
-              obj.rotation.y =
+            3,
+            new Animation({
+              func: (_, {startTime, currentTime}) => {
+                obj.rotation.y =
                 degreesToRadians(55) +
                 degreesToRadians(5) *
                 Math.cos(-1.5 + (currentTime - startTime) / 500);
-            },
-            duration: `infinite`,
-            easing: easing.easeInQuad,
-          })
+              },
+              duration: `infinite`,
+              easing: easing.easeInQuad,
+            })
         );
       }
     });
