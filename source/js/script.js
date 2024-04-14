@@ -59,8 +59,11 @@ window.addEventListener(`load`, function () {
     introTitleAnimated.start();
   }, 1000);
 
-  setTimeout(()=>{
+  window.addEventListener(`load`, async () => {
+    const isIntroPage = !window.location.hash || window.location.hash === `#top`;
+    await sceneController.initScene(isIntroPage ? 0 : 1);
+
     document.body.classList.add(`loaded`);
-  }, 2000);
+  });
 
 });

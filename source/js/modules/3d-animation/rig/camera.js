@@ -9,7 +9,7 @@ export class CameraRig extends THREE.Group {
     if (index === 0) {
       return {
         index,
-        depth: -4750,
+        depth: CameraRig.getMaxDepth(),
         rotationAxisYAngle: 0,
         horizonIncline: 0,
       };
@@ -18,7 +18,7 @@ export class CameraRig extends THREE.Group {
     if ([1, 2, 3, 4].includes(index)) {
       return {
         index,
-        depth: -1750,
+        depth: CameraRig.getMinDepth(),
         rotationAxisYAngle: ((index - 1) * Math.PI) / 2,
         horizonIncline: -degreesToRadians(15),
       };
@@ -27,10 +27,24 @@ export class CameraRig extends THREE.Group {
     return {};
   }
 
+  static getMinDepth() {
+    return -1750;
+  }
+
+  static getMaxDepth() {
+    return -4750;
+  }
+
   constructor(stateParameters) {
     super();
 
     this.stateParameters = stateParameters;
+
+    this.sceneController = sceneController;
+
+    this.keyholeCover = sceneController.mainPageScene.children.find(
+        ({name}) => name === `keyholeCover`
+    );
 
     // Set internal parameters
     this._depth = this.stateParameters.depth || 0;
@@ -77,6 +91,25 @@ export class CameraRig extends THREE.Group {
     }
     this._depth = value;
     this._depthChanged = true;
+
+    if (this.keyholeCover) {
+      let opacity;
+
+      const fullOpacityBreakpoint = -3700;
+      const noOpacityBreakpoint = -3000;
+
+      if (value < fullOpacityBreakpoint) {
+        opacity = 1;
+      } else if (value > noOpacityBreakpoint) {
+        opacity = 0;
+      } else {
+        opacity = (value - noOpacityBreakpoint) / (fullOpacityBreakpoint - noOpacityBreakpoint);
+      }
+
+      this.keyholeCover.opacity = opacity;
+
+      this.keyholeCover.invalidate();
+    }
   }
 
   get depth() {
@@ -124,6 +157,10 @@ export class CameraRig extends THREE.Group {
       this.rotationAxis.rotation.y = this._rotationAxisYAngle;
       this._rotationAxisYAngleChanged = false;
     }
+  }
+
+  addObjectToRotationAxis(object) {
+    this.rotationAxis.add(object);
   }
 
   addObjectToCameraNull(object) {

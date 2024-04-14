@@ -33,18 +33,17 @@ export class RoomTwoScene extends RoomScene {
       name: OBJECT_ELEMENTS.staticOutput2,
     };
 
-    this.constructChildren();
   }
 
-  constructChildren() {
-    super.constructChildren();
+  async constructChildren() {
+    await super.constructChildren();
 
-    this.addLeaves();
+    await this.addLeaves();
     this.addPyramid();
     this.addLantern();
   }
 
-  addLeaves() {
+  async addLeaves() {
     const config = {
       name: SVG_ELEMENTS.leaf,
       extrude: {
@@ -69,15 +68,17 @@ export class RoomTwoScene extends RoomScene {
     const group = new THREE.Group();
     const groupLeaf1 = new THREE.Group();
     const groupLeaf2 = new THREE.Group();
+    const leaf1 = await this.pageSceneCreator.createExtrudedSvgMesh(config);
+    const leaf2 = leaf1.clone();
+
 
     this.pageSceneCreator.createExtrudedSvgMesh(config, (leaf1) => {
       const leaf2 = leaf1.clone();
-
       this.pageSceneCreator.setTransformParams(leaf2, {
         position: {
           x: 0,
           y: 320,
-          z: 40,
+          z: 80,
         },
         rotation: {
           x: 2.9,
@@ -88,15 +89,13 @@ export class RoomTwoScene extends RoomScene {
 
       group.position.set(80, 20, 330);
 
-
-      this.addObject(leaf1);
-      this.addObject(leaf2);
-
-      this.animationManager.addAnimations(
+      this.animationManager.addRoomsPageAnimations(
+          1,
           new Animation({
             func: (_, {startTime, currentTime}) => {
               const time = ((currentTime - startTime) / 300) % 16;
-              groupLeaf1.rotation.x = 0.3 * Math.exp(-0.2 * time) * Math.cos(1.2 * time + Math.PI / 2);
+              groupLeaf1.rotation.x =
+              0.3 * Math.exp(-0.2 * time) * Math.cos(1.2 * time + Math.PI / 2);
             },
             duration: `infinite`,
             easing: easing.easeInOutSine,
@@ -104,7 +103,8 @@ export class RoomTwoScene extends RoomScene {
           new Animation({
             func: (_, {startTime, currentTime}) => {
               const time = ((currentTime - startTime) / 300) % 16;
-              groupLeaf2.rotation.x = 0.4 * Math.exp(-0.2 * time) * Math.cos(time + Math.PI / 2);
+              groupLeaf2.rotation.x =
+              0.4 * Math.exp(-0.2 * time) * Math.cos(time + Math.PI / 2);
             },
             duration: `infinite`,
             easing: easing.easeInOutSine,
