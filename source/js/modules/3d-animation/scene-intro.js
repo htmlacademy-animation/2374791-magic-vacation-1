@@ -6,6 +6,7 @@ import easing from "../../helpers/easing";
 import Animation from "../2d-animation/animation-2d";
 import {createBounceAnimation, createObjectTransformAnimation} from "./animation-creator";
 import {Airplane} from "./3d-objects/airplane";
+import {KeyholeCover} from './3d-objects/keyhole-cover';
 
 
 export class MainPageComposition extends THREE.Group {
@@ -183,7 +184,6 @@ export class MainPageComposition extends THREE.Group {
         },
       },
     ];
-
     this.meshObjects = [
       {
         name: OBJECT_ELEMENTS.watermelon,
@@ -218,21 +218,19 @@ export class MainPageComposition extends THREE.Group {
         },
       },
     ];
-
-    this.constructChildren();
   }
+  async constructChildren() {
+    await this.addMeshObjects();
+    await this.addExtrudedSvgObjects();
+    this.addKeyholeCover();
 
-  constructChildren() {
-    this.addMeshObjects();
-    this.addExtrudedSvgObjects();
-    this.addPlaneMeshBehindKeyhole();
     this.addSaturn();
-    this.addAirplane();
+
+    await this.addAirplane();
   }
-
-  addAirplane() {
+  async addAirplane() {
     const airplane = new Airplane(this.pageSceneCreator);
-
+    await airplane.constructRig();
     airplane.position.x = 135;
 
     const initialFightRadius = airplane.flightRadius;
@@ -241,7 +239,7 @@ export class MainPageComposition extends THREE.Group {
     const initialPlaneRotationZ = airplane.planeRotationZ;
     const initialPlaneIncline = airplane.planeIncline;
 
-    this.animationManager.addAnimations(
+    this.animationManager.addMainPageAnimations(
         new Animation({
           func: (progress) => {
             airplane.flightRadius =
@@ -276,20 +274,23 @@ export class MainPageComposition extends THREE.Group {
 
     this.addMesh(airplane);
   }
+  async addMeshObjects() {
+    await Promise.all(
+        this.meshObjects.map(async (config) => {
+          const obj = await this.pageSceneCreator.createObjectMesh(config);
 
-  addMeshObjects() {
-    this.meshObjects.forEach((config) => {
-      this.pageSceneCreator.createObjectMesh(config, this.addObject(config));
-    });
+          this.addObject(config)(obj);
+        })
+    );
   }
+  async addExtrudedSvgObjects() {
+    await Promise.all(
+        this.meshExtrudedObjects.map(async (config) => {
+          const obj = await this.pageSceneCreator.createExtrudedSvgMesh(config);
 
-  addExtrudedSvgObjects() {
-    this.meshExtrudedObjects.forEach((config) => {
-      this.pageSceneCreator.createExtrudedSvgMesh(
-          config,
-          this.addObject(config)
-      );
-    });
+          this.addObject(config)(obj);
+        })
+    );
   }
 
   addObject(config) {
@@ -302,7 +303,7 @@ export class MainPageComposition extends THREE.Group {
       }
 
       if (config.transformAppear) {
-        this.animationManager.addAnimations(
+        this.animationManager.addMainPageAnimations(
             createObjectTransformAnimation(obj, config.transformAppear, {
               duration: 1500,
               delay: 500,
@@ -310,27 +311,22 @@ export class MainPageComposition extends THREE.Group {
             })
         );
       }
-
       if (config.bounceAnimation) {
-        this.animationManager.addAnimations(createBounceAnimation(obj));
+        this.animationManager.addMainPageAnimations(createBounceAnimation(obj));
       }
-
       this.addMesh(obj);
     };
   }
-
   addSaturn() {
     const saturn = new Saturn(this.pageSceneCreator.materialCreator, {
       darkMode: false,
       withRope: false,
     });
-
     this.pageSceneCreator.setTransformParams(saturn, {
       rotation: {y: 3.6, z: 1},
       scale: 0,
     });
-
-    this.animationManager.addAnimations(
+    this.animationManager.addMainPageAnimations(
         createObjectTransformAnimation(
             saturn,
             {
@@ -345,38 +341,18 @@ export class MainPageComposition extends THREE.Group {
             }
         )
     );
-
-    this.animationManager.addAnimations(createBounceAnimation(saturn));
-
+    this.animationManager.addMainPageAnimations(createBounceAnimation(saturn));
     this.addMesh(saturn);
   }
 
-  addPlaneMeshBehindKeyhole() {
-    const meshBehindTheKeyHole = new THREE.Mesh(
-        new THREE.PlaneGeometry(400, 400, 2, 2),
-        this.pageSceneCreator.materialCreator.create(
-            MATERIAL_TYPE.BasicMaterial,
-            {
-              color: MaterialCreator.Colors.Purple,
-            }
-        )
-    );
-
-    meshBehindTheKeyHole.position.set(0, 0, -10);
-
-    this.addMesh(meshBehindTheKeyHole);
+  addKeyholeCover() {
+    const keyholeCover = new KeyholeCover(this.pageSceneCreator);
+    keyholeCover.position.set(0, 0, -200);
+    this.addMesh(keyholeCover);
   }
+
   addMesh(mesh) {
-    this.objectsLoaded++;
-
     this.add(mesh);
-
-    if (
-      this.objectsLoaded ===
-      this.meshObjects.length + this.meshExtrudedObjects.length + 2
-    ) {
-      this.animationManager.startAnimations();
-    }
   }
 
   addSuitCaseAnimation(suitcase) {
@@ -388,7 +364,7 @@ export class MainPageComposition extends THREE.Group {
 
     suitcaseRotateWrapper.rotation.set(0.2, -1.5, 1.3, `YZX`);
 
-    this.animationManager.addAnimations(
+    this.animationManager.addMainPageAnimations(
         new Animation({
           func: (progress) => {
             suitcaseRotateWrapper.rotation.set(
@@ -417,7 +393,7 @@ export class MainPageComposition extends THREE.Group {
         })
     );
 
-    this.animationManager.addAnimations(
+    this.animationManager.addMainPageAnimations(
         new Animation({
           func: (progress) => {
             suitcasePositionWrapper.position.y = progress * 70;
@@ -439,7 +415,7 @@ export class MainPageComposition extends THREE.Group {
         })
     );
 
-    this.animationManager.addAnimations(
+    this.animationManager.addMainPageAnimations(
         new Animation({
           func: (progress) => {
             const scale = 0.4 * progress;
@@ -452,7 +428,7 @@ export class MainPageComposition extends THREE.Group {
         })
     );
 
-    this.animationManager.addAnimations(
+    this.animationManager.addMainPageAnimations(
         createBounceAnimation(suitcasePositionWrapper)
     );
 

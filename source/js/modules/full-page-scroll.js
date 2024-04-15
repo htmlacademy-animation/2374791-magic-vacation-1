@@ -2,7 +2,7 @@ import throttle from 'lodash/throttle';
 import {currentTheme, changePageTheme} from "./page-theme";
 import timerStart from './game-timer';
 import NumberUpAnimation from './number-up-animation';
-import {plainMeshController} from './3d-animation/plainMeshController';
+// import {plainMeshController} from './3d-animation/plainMeshController';
 // import {scene} from './3d-animation/initAnimationScreen';
 // import {sphere} from './3d-animation/sphere';
 import {sceneController} from '../script';
@@ -123,16 +123,10 @@ export default class FullPageScroll {
     const isIntroPage = nextActiveScreen.classList.contains(`screen--intro`);
     const isStoryPage = nextActiveScreen.classList.contains(`screen--story`);
 
-    if (isIntroPage || isStoryPage) {
-      if (!sceneController.isInit) {
-        sceneController.initScene(isIntroPage ? 0 : 1);
-      }
-
-      if (isIntroPage) {
-        sceneController.showMainScene();
-      } else if (isStoryPage) {
-        sceneController.showRoomScene();
-      }
+    if (isIntroPage) {
+      sceneController.showMainScene();
+    } else if (isStoryPage) {
+      sceneController.showRoomScene();
     }
 
     // if (nextActiveScreen.classList.contains(`screen--intro`)) {

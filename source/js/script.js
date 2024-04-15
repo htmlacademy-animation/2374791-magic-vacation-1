@@ -24,8 +24,13 @@ social();
 
 export const sceneController = new SceneController();
 
-const fullPageScroll = new FullPageScroll();
-fullPageScroll.init();
+window.addEventListener(`load`, async () => {
+  const isIntroPage = !window.location.hash || window.location.hash === `#top`;
+  await sceneController.initScene(isIntroPage ? 0 : 1);
+  const fullPageScroll = new FullPageScroll();
+  fullPageScroll.init();
+  document.body.classList.add(`loaded`);
+});
 
 window.addEventListener(`load`, function () {
   document.querySelector(`body`).classList.add(`is-loaded`);
@@ -58,9 +63,5 @@ window.addEventListener(`load`, function () {
   setTimeout(() => {
     introTitleAnimated.start();
   }, 1000);
-
-  setTimeout(()=>{
-    document.body.classList.add(`loaded`);
-  }, 2000);
 
 });
