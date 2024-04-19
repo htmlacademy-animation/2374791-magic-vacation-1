@@ -17,14 +17,14 @@ export class Airplane extends THREE.Group {
         scale: 1,
       },
       material: this.pageSceneCreator.materialCreator.create(
-        MATERIAL_TYPE.BasicMaterial,
-        {
-          color: MaterialCreator.Colors.White,
-        }
+          MATERIAL_TYPE.BasicMaterial,
+          {
+            color: MaterialCreator.Colors.White,
+          }
       ),
     };
 
-    this._flightRadius = 100;
+    this._flightRadius = 50;
     this._flightRadiusChanged = true;
 
     this._flightHeight = -100;
@@ -118,7 +118,7 @@ export class Airplane extends THREE.Group {
 
   async addAirplaneObject() {
     this.airplaneObject = await this.pageSceneCreator.createObjectMesh(
-      this.airplaneConfig
+        this.airplaneConfig
     );
 
     this.airplaneInclineGroup = new THREE.Group();
