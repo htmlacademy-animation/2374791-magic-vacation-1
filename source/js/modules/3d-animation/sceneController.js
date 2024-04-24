@@ -43,7 +43,6 @@ export class SceneController {
     this.mouseMoveHandler = this.mouseMoveHandler.bind(this);
     this.touchMoveHandler = this.touchMoveHandler.bind(this);
     this.onResize = this.onResize.bind(this);
-
     window.addEventListener(`resize`, this.onResize);
   }
 
