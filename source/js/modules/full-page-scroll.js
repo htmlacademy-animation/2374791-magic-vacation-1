@@ -1,11 +1,10 @@
 import throttle from 'lodash/throttle';
 import {currentTheme, changePageTheme} from "./page-theme";
-import timerStart from './game-timer';
+import {timerStart, stopTimer} from './game-timer';
 import NumberUpAnimation from './number-up-animation';
-// import {plainMeshController} from './3d-animation/plainMeshController';
-// import {scene} from './3d-animation/initAnimationScreen';
-// import {sphere} from './3d-animation/sphere';
 import {sceneController} from '../script';
+import {sonyaStartAnimation, sonyaEndAnimation} from './3d-animation/animation-sonya';
+
 
 export default class FullPageScroll {
   constructor() {
@@ -65,8 +64,10 @@ export default class FullPageScroll {
       screen.classList.remove(`active`);
       screen.classList.remove(`screen--prev`);
     });
+
     this.screenElements[prevIndex].classList.add(`screen--prev`);
     this.screenElements[this.activeScreen].classList.remove(`screen--hidden`);
+
     setTimeout(() => {
       if (this.activeScreen === 0 || this.activeScreen === 1) {
         document.querySelector(`.animation-screen`).classList.remove(`hidden`);
@@ -115,6 +116,12 @@ export default class FullPageScroll {
 
     if (this.activeScreen === 4) {
       timerStart();
+      sonyaStartAnimation();
+    }
+
+    if (prevIndex === 4) {
+      stopTimer();
+      sonyaEndAnimation();
     }
 
     const prevActiveScreen = document.querySelector(`.screen.active`);
@@ -131,26 +138,6 @@ export default class FullPageScroll {
       sceneController.showMainScene();
     } else if (isStoryPage) {
       sceneController.showRoomScene();
-    }
-
-    // if (nextActiveScreen.classList.contains(`screen--intro`)) {
-    //   // sceneController.addScreenMesh();
-    //   sceneController.addScene();
-    // } else if (nextActiveScreen.classList.contains(`screen--story`)) {
-    //   plainMeshController.addScreenMesh(`story`).then(() => {
-    //     plainMeshController.setStoryActiveMesh();
-    //   });
-    // }
-
-    if (
-      prevActiveScreen &&
-      prevActiveScreen.classList.contains(`screen--story`)
-    ) {
-      // bodyTheme.clearBodyTheme();
-    }
-
-    if (nextActiveScreen.classList.contains(`screen--story`)) {
-      // bodyTheme.applyTheme();
     }
 
     this.screenElements.forEach((screen) => {
