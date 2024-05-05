@@ -5,6 +5,7 @@ let drawMinIntervalMs = 1000;
 let now;
 let drawLastTime = Date.now();
 let elapsed;
+let runningAnimation = null;
 
 const counterMinutes = document.querySelector(`.js-timer-minutes`);
 const counterSeconds = document.querySelector(`.js-timer-seconds`);
@@ -28,13 +29,17 @@ function tick() {
     draw();
   }
   if (timeLeft > 0) {
-    requestAnimationFrame(tick);
+    runningAnimation = requestAnimationFrame(tick);
   }
 }
 
-export default function timerStart() {
-  if (timeLeft === undefined) {
-    timeLeft = TIMER_DURATION_SEC;
-    requestAnimationFrame(tick);
+export function timerStart() {
+  timeLeft = TIMER_DURATION_SEC;
+  runningAnimation = requestAnimationFrame(tick);
+}
+
+export function stopTimer() {
+  if (runningAnimation) {
+    cancelAnimationFrame(runningAnimation);
   }
 }
